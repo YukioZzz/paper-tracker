@@ -4,7 +4,10 @@ import { defineConfig } from "vite"
 import sourceIdentifierPlugin from 'vite-plugin-source-identifier'
 
 const isProd = process.env.BUILD_MODE === 'prod'
+const isGHPages = process.env.GITHUB_ACTIONS === 'true'
+
 export default defineConfig({
+  base: isGHPages ? '/paper-tracker/' : '/',
   plugins: [
     react(),
     sourceIdentifierPlugin({
