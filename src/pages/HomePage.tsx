@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Brain, Globe, Zap, BookOpen, TrendingUp, RefreshCw, Database, Moon, Sun } from 'lucide-react';
+import { Brain, Globe, Zap, BookOpen, TrendingUp, RefreshCw, Database, Moon, Sun, FlaskConical } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 export default function HomePage() {
@@ -38,10 +38,10 @@ export default function HomePage() {
       <div className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
         <div className="max-w-6xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { label: '追踪论文总数', value: '85+', icon: BookOpen, color: 'text-blue-500', bg: 'bg-blue-50' },
-            { label: '覆盖领域', value: '3', icon: Globe, color: 'text-purple-500', bg: 'bg-purple-50' },
+            { label: '追踪论文总数', value: '90+', icon: BookOpen, color: 'text-blue-500', bg: 'bg-blue-50' },
+            { label: '覆盖领域', value: '4', icon: Globe, color: 'text-purple-500', bg: 'bg-purple-50' },
             { label: '数据来源', value: '10+', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-            { label: '含洞察分析', value: '83+', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-50' },
+            { label: '含洞察分析', value: '89+', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-50' },
           ].map(stat => (
             <div key={stat.label} className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-xl ${stat.bg} flex items-center justify-center`}>
@@ -61,7 +61,7 @@ export default function HomePage() {
         <h2 className="text-2xl font-bold text-center mb-3 text-slate-800 dark:text-slate-100">选择研究方向</h2>
         <p className="text-slate-400 text-center mb-12 dark:text-slate-500">点击论文标题可查看中文摘要、创新点分析、核心公式等洞察内容</p>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Embodied AI */}
           <Link to="/embodied" className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white hover:border-blue-300 hover:shadow-xl hover:shadow-blue-100 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500 dark:hover:shadow-blue-950/40">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:from-slate-800 dark:to-slate-700" />
@@ -127,6 +127,29 @@ export default function HomePage() {
               <div className="flex items-center justify-between text-sm">
                 <span className="text-slate-400 dark:text-slate-500">25+ 篇</span>
                 <span className="text-emerald-500 group-hover:translate-x-1 transition-transform font-medium">进入 →</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Open Models */}
+          <Link to="/open-models" className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white hover:border-slate-400 hover:shadow-xl hover:shadow-slate-200 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-500 dark:hover:shadow-slate-950/40">
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:from-slate-800 dark:to-slate-700" />
+            <div className="relative p-7">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-blue-700 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-md shadow-slate-300">
+                <FlaskConical className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-slate-800 group-hover:text-slate-700 transition-colors dark:text-slate-100 dark:group-hover:text-slate-300">开源模型洞察</h3>
+              <p className="text-slate-400 mb-5 text-sm leading-relaxed dark:text-slate-400">
+                聚焦蚂蚁、GLM、MiniMax、DeepSeek、Kimi 等最新开源模型技术报告
+              </p>
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {['Ant', 'GLM', 'MiniMax', 'DeepSeek', 'Kimi'].map(t => (
+                  <span key={t} className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-medium dark:bg-slate-800 dark:text-slate-200">{t}</span>
+                ))}
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-400 dark:text-slate-500">6+ 篇</span>
+                <span className="text-slate-600 group-hover:translate-x-1 transition-transform font-medium dark:text-slate-300">进入 →</span>
               </div>
             </div>
           </Link>

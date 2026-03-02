@@ -1,0 +1,208 @@
+import { Paper } from './embodiedAIPapers';
+
+export const openSourceModelPapers: Paper[] = [
+  {
+    id: 'osm-001',
+    title: 'DeepSeek-V3 Technical Report',
+    authors: ['DeepSeek-AI Team'],
+    date: '2024-12-27',
+    year: 2024,
+    month: 12,
+    source: 'arXiv',
+    arxivId: '2412.19437',
+    url: 'https://arxiv.org/abs/2412.19437',
+    abstract:
+      'DeepSeek-V3 is a large Mixture-of-Experts (MoE) language model with 671B total parameters and 37B activated parameters per token. It uses MLA and DeepSeekMoE, introduces auxiliary-loss-free load balancing and multi-token prediction, and is trained on 14.8T tokens followed by SFT + RL.',
+    tags: ['DeepSeek', 'MoE', 'MLA', 'Reasoning', 'Open-Source'],
+    category: 'DeepSeek',
+    citations: 362,
+    venue: 'arXiv 2024',
+    insights: {
+      zhAbstract:
+        'DeepSeek-V3 是 DeepSeek 的核心开源技术报告，主打“大参数总量 + 低激活成本”的 MoE 路线：总参数 671B、每 token 激活 37B。在训练侧通过 14.8T token 预训练和后续 SFT/RL 组合，实现了对推理能力与训练稳定性的平衡。',
+      innovations: [
+        '提出并工程化 Multi-head Latent Attention（MLA）与 DeepSeekMoE 组合架构',
+        '采用 auxiliary-loss-free 的负载均衡策略，降低传统 MoE 辅助损失副作用',
+        '引入 multi-token prediction 训练目标，提升 token 级效率',
+        '强调训练稳定性：官方报告称训练过程无不可恢复 loss spike',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '671B 总参数、37B 激活参数/token',
+        '14.8T token 预训练后再进行 SFT + RL',
+        '完整训练成本公开为 2.788M H800 GPU hours（报告口径）',
+      ],
+      useCases: ['通用基础模型能力底座', '高性价比 MoE 训练范式参考', '后续推理模型蒸馏与对齐'],
+    },
+  },
+  {
+    id: 'osm-002',
+    title: 'DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning',
+    authors: ['DeepSeek-AI Team'],
+    date: '2025-01-22',
+    year: 2025,
+    month: 1,
+    source: 'arXiv',
+    arxivId: '2501.12948',
+    url: 'https://arxiv.org/abs/2501.12948',
+    abstract:
+      'DeepSeek-R1 introduces a reasoning-centric RL training approach. The report highlights that large-scale RL can induce reasoning behaviors such as self-reflection and verification, and presents both R1-Zero and R1 along with distilled smaller models.',
+    tags: ['DeepSeek', 'RL', 'Reasoning', 'Distillation', 'Open-Source'],
+    category: 'DeepSeek',
+    citations: 854,
+    venue: 'arXiv 2025',
+    insights: {
+      zhAbstract:
+        'DeepSeek-R1 报告的核心是“用强化学习直接激励推理能力”。R1-Zero 先证明纯 RL 能涌现反思与验证等推理行为，再通过冷启动数据和多阶段训练得到更稳定、可读性更好的 R1。',
+      innovations: [
+        '把 RL 放到推理能力塑造的中心位置，弱化对人工推理标注轨迹的依赖',
+        '提出 R1-Zero 到 R1 的两阶段路线：先涌现能力，再工程化可用性',
+        '围绕数学、代码和 STEM 等可验证任务构建奖励信号',
+        '同步开源多尺寸蒸馏模型，扩大推理模型可用范围',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '报告称 R1 在多个推理任务上可比肩同代闭源推理模型',
+        '展示了 self-reflection、verification 等行为涌现',
+        '开源包含 R1/R1-Zero 及多尺寸蒸馏版本',
+      ],
+      useCases: ['复杂推理任务（数学/代码）', '推理模型蒸馏教学', 'RL 对齐与可验证奖励研究'],
+    },
+  },
+  {
+    id: 'osm-003',
+    title: 'GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models',
+    authors: ['Z.ai / THUDM Team'],
+    date: '2025-08-08',
+    year: 2025,
+    month: 8,
+    source: 'arXiv',
+    arxivId: '2508.06471',
+    url: 'https://arxiv.org/abs/2508.06471',
+    abstract:
+      'GLM-4.5 is an open-source MoE model family focused on agentic, reasoning, and coding. The report describes 355B total parameters with 32B activated parameters, hybrid reasoning modes, 23T-token training, and strong ARC benchmark performance.',
+    tags: ['GLM', 'Agentic', 'Coding', 'MoE', 'ARC'],
+    category: 'GLM',
+    citations: 96,
+    venue: 'arXiv 2025',
+    insights: {
+      zhAbstract:
+        'GLM-4.5 强调 ARC（Agentic / Reasoning / Coding）统一能力，采用 355B 总参、32B 激活的 MoE 设计，并提供标准版与更轻量 Air 版。报告里对智能体任务和代码场景的表现着墨较多。',
+      innovations: [
+        'Agentic + Reasoning + Coding 的统一训练目标与评测口径',
+        '支持思考模式与直接回答模式的混合推理机制',
+        '23T token 级别训练与多阶段后训练迭代',
+        '同代同时发布大模型与轻量模型，覆盖不同部署场景',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '355B 总参数、32B 激活参数/token',
+        '报告给出 TAU-Bench / AIME24 / SWE-bench Verified 等关键分数',
+        '同时发布 GLM-4.5 与 GLM-4.5-Air',
+      ],
+      useCases: ['Agent 工具调用', '复杂代码任务', '企业私有部署与轻量化落地'],
+    },
+  },
+  {
+    id: 'osm-004',
+    title: 'MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention',
+    authors: ['MiniMax Team'],
+    date: '2025-06-16',
+    year: 2025,
+    month: 6,
+    source: 'arXiv',
+    arxivId: '2506.13585',
+    url: 'https://arxiv.org/abs/2506.13585',
+    abstract:
+      'MiniMax-M1 is an open-weight reasoning model with hybrid MoE + lightning attention. The report highlights 1M context support, RL-based post-training efficiency, and CISPO for improved RL stability/efficiency.',
+    tags: ['MiniMax', 'MoE', 'Long Context', 'RL', 'Lightning Attention'],
+    category: 'MiniMax',
+    citations: 118,
+    venue: 'arXiv 2025',
+    insights: {
+      zhAbstract:
+        'MiniMax-M1 主打“长上下文 + 推理效率”。其技术报告将 hybrid attention 与 MoE 结合，并把 test-time compute 扩展能力作为核心卖点之一。报告还提出 CISPO 来提升强化学习后训练效率。',
+      innovations: [
+        'Hybrid MoE + lightning attention，面向长上下文推理',
+        '支持 1M 原生上下文窗口，强调复杂长输入任务能力',
+        '提出 CISPO（裁剪重要性采样权重）以提升 RL 训练效率',
+        '以成本和训练周期为指标展示工程可扩展性',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '总参数 456B、激活参数 45.9B/token（报告口径）',
+        '1M context 长文能力',
+        '报告披露 512 H800、约 3 周完成主阶段 RL 训练',
+      ],
+      useCases: ['长文档与代码仓级任务', '工具调用与软件工程代理', '低成本推理模型研发参考'],
+    },
+  },
+  {
+    id: 'osm-005',
+    title: 'Kimi K2: Open Agentic Intelligence',
+    authors: ['Moonshot AI Team'],
+    date: '2025-07-28',
+    year: 2025,
+    month: 7,
+    source: 'arXiv',
+    arxivId: '2507.20534',
+    url: 'https://arxiv.org/abs/2507.20534',
+    abstract:
+      'Kimi K2 is an MoE model with 1T total parameters and 32B activated parameters. The report introduces MuonClip optimizer for stability and token efficiency, and emphasizes agentic post-training with real/synthetic environment interaction.',
+    tags: ['Kimi', 'Agentic', 'MoE', 'MuonClip', 'RL'],
+    category: 'Kimi',
+    citations: 87,
+    venue: 'arXiv 2025',
+    insights: {
+      zhAbstract:
+        'Kimi K2 聚焦“开源 Agentic Intelligence”，报告提出 MuonClip 优化器与大规模 agent 数据合成流程，目标是在保持训练稳定性的同时提升 token 效率和环境交互能力。',
+      innovations: [
+        '1T 总参 MoE + 32B 激活参数路线，兼顾容量与推理成本',
+        '提出 MuonClip（含 QK-clip）用于稳定训练与效率提升',
+        '多阶段后训练中强调真实/合成环境交互',
+        '将 agent 能力作为主线而不只是通用问答能力',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '1T 总参数、32B 激活参数/token',
+        '预训练规模 15.5T token（报告口径）',
+        '报告强调无 loss spike 的训练稳定性',
+      ],
+      useCases: ['工具调用代理', '复杂任务编排', '多轮任务执行与反馈优化'],
+    },
+  },
+  {
+    id: 'osm-006',
+    title: 'Towards Greater Leverage: Scaling Laws for Efficient Mixture-of-Experts Language Models',
+    authors: ['Ling Team'],
+    date: '2025-07-23',
+    year: 2025,
+    month: 7,
+    source: 'arXiv',
+    arxivId: '2507.17702',
+    url: 'https://arxiv.org/abs/2507.17702',
+    abstract:
+      'This report studies scaling laws for efficient MoE LLMs and introduces Efficiency Leverage (EL). It trains 300+ models and validates the scaling law through Ling-mini-beta (pilot for Ling-2.0), showing dense-equivalent performance at much lower compute.',
+    tags: ['Ant', 'Ling', 'MoE', 'Scaling Law', 'Efficiency'],
+    category: 'Ant',
+    citations: 39,
+    venue: 'arXiv 2025',
+    insights: {
+      zhAbstract:
+        '这份报告可视为蚂蚁 Ling 路线的“效率缩放律”核心文档之一：它把 MoE 架构搜索抽象为可预测的 Efficiency Leverage（EL），并通过 Ling-mini-beta 进行实证验证，为后续 Ling-2.0 系列提供可量化的配置设计方法。',
+      innovations: [
+        '提出 Efficiency Leverage（EL）指标量化 MoE 相对 dense 的计算优势',
+        '基于 300+ 模型实验给出可拟合的 MoE 缩放规律',
+        '指出激活比例与总算力预算对 EL 的主导作用',
+        '以 Ling-mini-beta 对缩放律进行外部验证',
+      ],
+      keyFormulas: [],
+      experimentHighlights: [
+        '报告覆盖 300+ MoE 实验模型',
+        'Ling-mini-beta 用 0.85B 激活参数达到 6.1B dense 近似性能',
+        '同等数据规模下计算资源消耗显著降低（报告口径 7x+）',
+      ],
+      useCases: ['MoE 架构超参设计', '低算力开源模型研发', '企业模型成本控制与容量规划'],
+    },
+  },
+];
