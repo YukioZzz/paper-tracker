@@ -11,12 +11,12 @@ export default function EmbodiedAIPage() {
       emoji="🤖"
       accentFrom="from-blue-500"
       accentTo="to-cyan-500"
-      accentText="text-blue-400"
-      accentBorder="border-blue-500/30"
-      accentBg="bg-blue-500/10"
-      tagBg="bg-blue-500/10"
-      tagText="text-blue-400"
-      tagBorder="border-blue-500/20"
+      accentText="text-blue-600"
+      accentBorder="border-blue-200"
+      accentBg="bg-blue-50"
+      tagBg="bg-blue-50"
+      tagText="text-blue-600"
+      tagBorder="border-blue-200"
       papers={embodiedAIPapers}
       categories={CATEGORIES}
     />

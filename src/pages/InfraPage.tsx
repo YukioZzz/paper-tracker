@@ -11,12 +11,12 @@ export default function InfraPage() {
       emoji="⚡"
       accentFrom="from-emerald-500"
       accentTo="to-teal-500"
-      accentText="text-emerald-400"
-      accentBorder="border-emerald-500/30"
-      accentBg="bg-emerald-500/10"
-      tagBg="bg-emerald-500/10"
-      tagText="text-emerald-400"
-      tagBorder="border-emerald-500/20"
+      accentText="text-emerald-600"
+      accentBorder="border-emerald-200"
+      accentBg="bg-emerald-50"
+      tagBg="bg-emerald-50"
+      tagText="text-emerald-600"
+      tagBorder="border-emerald-200"
       papers={infraPapers}
       categories={CATEGORIES}
     />

@@ -5,18 +5,21 @@ import { Paper } from '../data/embodiedAIPapers';
 import PaperModal from './PaperModal';
 
 const SOURCE_COLORS: Record<string, string> = {
-  arXiv: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  CVPR: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  ICCV: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-  NeurIPS: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  ICML: 'bg-green-500/10 text-green-400 border-green-500/20',
-  ICLR: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
-  ECCV: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  SC: 'bg-red-500/10 text-red-400 border-red-500/20',
-  OSDI: 'bg-teal-500/10 text-teal-400 border-teal-500/20',
-  MLSys: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-  SOSP: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
-  JMLR: 'bg-lime-500/10 text-lime-400 border-lime-500/20',
+  arXiv: 'bg-orange-100 text-orange-600 border-orange-200',
+  CVPR: 'bg-blue-100 text-blue-600 border-blue-200',
+  ICCV: 'bg-cyan-100 text-cyan-600 border-cyan-200',
+  NeurIPS: 'bg-purple-100 text-purple-600 border-purple-200',
+  ICML: 'bg-green-100 text-green-600 border-green-200',
+  ICLR: 'bg-pink-100 text-pink-600 border-pink-200',
+  ECCV: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+  SC: 'bg-red-100 text-red-600 border-red-200',
+  OSDI: 'bg-teal-100 text-teal-600 border-teal-200',
+  MLSys: 'bg-indigo-100 text-indigo-600 border-indigo-200',
+  SOSP: 'bg-violet-100 text-violet-600 border-violet-200',
+  JMLR: 'bg-lime-100 text-lime-700 border-lime-200',
+  RSS: 'bg-sky-100 text-sky-600 border-sky-200',
+  ICRA: 'bg-rose-100 text-rose-600 border-rose-200',
+  CoRL: 'bg-amber-100 text-amber-600 border-amber-200',
 };
 
 interface PaperTrackerProps {
@@ -77,30 +80,30 @@ export default function PaperTracker({
   }, [papers]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-slate-50 text-gray-900">
       {/* Modal */}
       {modalPaper && <PaperModal paper={modalPaper} onClose={() => setModalPaper(null)} />}
 
       {/* Header */}
-      <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 border-b border-gray-800">
+      <div className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-8">
-          <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6 text-sm">
+          <Link to="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors mb-6 text-sm">
             <ArrowLeft className="w-4 h-4" /> 返回首页
           </Link>
           <div className="flex items-start gap-4">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${accentFrom} ${accentTo} flex items-center justify-center text-2xl flex-shrink-0`}>
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${accentFrom} ${accentTo} flex items-center justify-center text-2xl flex-shrink-0 shadow-lg`}>
               {emoji}
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white mb-1">{title}</h1>
-              <p className="text-gray-400 text-sm">{subtitle}</p>
+              <h1 className="text-3xl font-bold text-slate-800 mb-1">{title}</h1>
+              <p className="text-slate-400 text-sm">{subtitle}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="border-b border-gray-800 bg-gray-900/50">
+      <div className="border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { label: '论文总数', value: stats.total, icon: BookOpen },
@@ -113,8 +116,8 @@ export default function PaperTracker({
                 <s.icon className={`w-5 h-5 ${accentText}`} />
               </div>
               <div>
-                <div className="text-xl font-bold text-white">{s.value}</div>
-                <div className="text-xs text-gray-500">{s.label}</div>
+                <div className="text-xl font-bold text-slate-800">{s.value}</div>
+                <div className="text-xs text-slate-400">{s.label}</div>
               </div>
             </div>
           ))}
@@ -125,18 +128,18 @@ export default function PaperTracker({
         {/* Search & Filter Bar */}
         <div className="flex flex-col md:flex-row gap-3 mb-6">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               placeholder="搜索论文标题、作者、关键词..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-gray-900 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 transition-colors"
+              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 transition-all shadow-sm"
             />
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 hover:border-gray-500 transition-colors"
+            className="flex items-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-600 hover:border-slate-400 hover:shadow-sm transition-all shadow-sm"
           >
             <Filter className="w-4 h-4" />
             筛选
@@ -145,7 +148,7 @@ export default function PaperTracker({
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value as 'date' | 'citations')}
-            className="px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:outline-none focus:border-gray-500 transition-colors"
+            className="px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-slate-400 transition-all shadow-sm"
           >
             <option value="date">按日期排序</option>
             <option value="citations">按引用数排序</option>
@@ -154,24 +157,24 @@ export default function PaperTracker({
 
         {/* Filters */}
         {showFilters && (
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 mb-6 space-y-4">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 mb-6 space-y-4 shadow-sm">
             <div>
-              <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">研究方向</p>
+              <p className="text-xs text-slate-400 mb-2 uppercase tracking-wider">研究方向</p>
               <div className="flex flex-wrap gap-2">
                 {allCategories.map(cat => (
                   <button key={cat} onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${selectedCategory === cat ? `${accentBg} ${accentText} ${accentBorder}` : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'}`}>
+                    className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${selectedCategory === cat ? `${accentBg} ${accentText} ${accentBorder} font-medium` : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}>
                     {cat}
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">数据来源</p>
+              <p className="text-xs text-slate-400 mb-2 uppercase tracking-wider">数据来源</p>
               <div className="flex flex-wrap gap-2">
                 {sources.map(src => (
                   <button key={src} onClick={() => setSelectedSource(src)}
-                    className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${selectedSource === src ? `${accentBg} ${accentText} ${accentBorder}` : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'}`}>
+                    className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${selectedSource === src ? `${accentBg} ${accentText} ${accentBorder} font-medium` : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}>
                     {src}
                   </button>
                 ))}
@@ -184,17 +187,17 @@ export default function PaperTracker({
         <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
           {allCategories.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
-              className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm border transition-colors ${selectedCategory === cat ? `${accentBg} ${accentText} ${accentBorder} font-medium` : 'bg-gray-900 text-gray-400 border-gray-800 hover:border-gray-600'}`}>
+              className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm border transition-colors ${selectedCategory === cat ? `${accentBg} ${accentText} ${accentBorder} font-medium shadow-sm` : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:bg-slate-50'}`}>
               {cat}
             </button>
           ))}
         </div>
 
         {/* Results count */}
-        <p className="text-gray-500 text-sm mb-4">
-          找到 <span className="text-white font-medium">{filtered.length}</span> 篇论文
+        <p className="text-slate-400 text-sm mb-4">
+          找到 <span className="text-slate-700 font-medium">{filtered.length}</span> 篇论文
           {search && <span className="ml-1">（搜索："{search}"）</span>}
-          <span className="ml-2 text-xs text-gray-600">· 点击论文标题查看洞察分析</span>
+          <span className="ml-2 text-xs text-slate-300">· 点击论文标题查看洞察分析</span>
         </p>
 
         {/* Paper List */}
@@ -209,11 +212,11 @@ export default function PaperTracker({
             />
           ))}
           {filtered.length === 0 && (
-            <div className="text-center py-20 text-gray-500">
+            <div className="text-center py-20 text-slate-400">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-30" />
               <p>没有找到匹配的论文</p>
               <button onClick={() => { setSearch(''); setSelectedCategory('全部'); setSelectedSource('全部'); }}
-                className="mt-3 text-sm text-blue-400 hover:underline">清除筛选</button>
+                className="mt-3 text-sm text-blue-500 hover:underline">清除筛选</button>
             </div>
           )}
         </div>
@@ -228,44 +231,44 @@ function PaperCard({ paper, tagBg, tagText, tagBorder, accentText, accentBg, acc
   onOpenModal: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const srcStyle = SOURCE_COLORS[paper.source] || 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+  const srcStyle = SOURCE_COLORS[paper.source] || 'bg-slate-100 text-slate-500 border-slate-200';
   const shortAbstract = paper.abstract.length > 200 ? paper.abstract.slice(0, 200) + '...' : paper.abstract;
   const hasInsights = Boolean(paper.insights);
 
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-gray-700 transition-all duration-200 hover:shadow-lg hover:shadow-black/20">
+    <div className="bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-md transition-all duration-200">
       <div className="flex items-start justify-between gap-4 mb-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-2">
-            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs border ${srcStyle}`}>{paper.source}</span>
+            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs border font-medium ${srcStyle}`}>{paper.source}</span>
             <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs border ${tagBg} ${tagText} ${tagBorder}`}>{paper.category}</span>
-            <span className="text-xs text-gray-500 flex items-center gap-1"><Calendar className="w-3 h-3" />{paper.date}</span>
+            <span className="text-xs text-slate-400 flex items-center gap-1"><Calendar className="w-3 h-3" />{paper.date}</span>
             {hasInsights && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-amber-500/10 border border-amber-500/20 text-amber-400">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-amber-50 border border-amber-200 text-amber-600 font-medium">
                 <Sparkles className="w-3 h-3" />洞察
               </span>
             )}
           </div>
           <button
             onClick={onOpenModal}
-            className="text-left text-base font-semibold text-white hover:text-blue-300 transition-colors leading-snug block"
+            className="text-left text-base font-semibold text-slate-800 hover:text-blue-600 transition-colors leading-snug block"
           >
             {paper.title}
           </button>
         </div>
         <a href={paper.url} target="_blank" rel="noopener noreferrer"
-          className="flex-shrink-0 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors" title="在 arXiv 查看">
-          <ExternalLink className="w-4 h-4 text-gray-400" />
+          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors" title="在 arXiv 查看">
+          <ExternalLink className="w-4 h-4 text-slate-500" />
         </a>
       </div>
 
-      <div className="flex items-center gap-1 mb-3 text-sm text-gray-400 flex-wrap">
+      <div className="flex items-center gap-1 mb-3 text-sm text-slate-400 flex-wrap">
         <Users className="w-3 h-3" />
         {paper.authors.slice(0, 4).join(', ')}
-        {paper.authors.length > 4 && <span className="text-gray-500"> +{paper.authors.length - 4}</span>}
+        {paper.authors.length > 4 && <span className="text-slate-300"> +{paper.authors.length - 4}</span>}
       </div>
 
-      <p className="text-sm text-gray-400 leading-relaxed mb-3">
+      <p className="text-sm text-slate-500 leading-relaxed mb-3">
         {expanded ? paper.abstract : shortAbstract}
         {paper.abstract.length > 200 && (
           <button onClick={() => setExpanded(!expanded)} className={`ml-1 ${accentText} text-xs hover:underline`}>
@@ -277,21 +280,23 @@ function PaperCard({ paper, tagBg, tagText, tagBorder, accentText, accentBg, acc
       <div className="flex items-center justify-between">
         <div className="flex flex-wrap gap-1">
           {paper.tags.slice(0, 5).map(tag => (
-            <span key={tag} className={`px-2 py-0.5 rounded-md text-xs border ${tagBg} ${tagText} ${tagBorder} opacity-80`}>
+            <span key={tag} className={`px-2 py-0.5 rounded-md text-xs border ${tagBg} ${tagText} ${tagBorder}`}>
               <Tag className="w-2.5 h-2.5 inline mr-0.5" />{tag}
             </span>
           ))}
         </div>
         <div className="flex items-center gap-3 flex-shrink-0 ml-2">
-          <div className="flex items-center gap-1 text-xs text-gray-500">
+          <div className="flex items-center gap-1 text-xs text-slate-400">
             <TrendingUp className="w-3 h-3" />{paper.citations} 引用
           </div>
-          <button
-            onClick={onOpenModal}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs border ${accentBg} ${accentText} ${accentBorder} hover:opacity-80 transition-opacity`}
-          >
-            <Sparkles className="w-3 h-3" />洞察分析
-          </button>
+          {hasInsights && (
+            <button
+              onClick={onOpenModal}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs border ${accentBg} ${accentText} ${accentBorder} hover:opacity-80 transition-opacity font-medium`}
+            >
+              <Sparkles className="w-3 h-3" />洞察分析
+            </button>
+          )}
         </div>
       </div>
     </div>

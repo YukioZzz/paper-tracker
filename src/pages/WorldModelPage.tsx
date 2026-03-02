@@ -11,12 +11,12 @@ export default function WorldModelPage() {
       emoji="🌍"
       accentFrom="from-purple-500"
       accentTo="to-pink-500"
-      accentText="text-purple-400"
-      accentBorder="border-purple-500/30"
-      accentBg="bg-purple-500/10"
-      tagBg="bg-purple-500/10"
-      tagText="text-purple-400"
-      tagBorder="border-purple-500/20"
+      accentText="text-purple-600"
+      accentBorder="border-purple-200"
+      accentBg="bg-purple-50"
+      tagBg="bg-purple-50"
+      tagText="text-purple-600"
+      tagBorder="border-purple-200"
       papers={worldModelPapers}
       categories={CATEGORIES}
     />

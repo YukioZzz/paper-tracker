@@ -32,28 +32,28 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
     <div
       ref={overlayRef}
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4"
     >
-      <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl">
+      <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-slate-200 rounded-2xl shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-start justify-between gap-4">
+        <div className="sticky top-0 z-10 bg-white border-b border-slate-200 px-6 py-4 flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap gap-2 mb-2">
-              <span className="px-2 py-0.5 rounded-md text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <span className="px-2 py-0.5 rounded-md text-xs bg-blue-100 text-blue-600 border border-blue-200 font-medium">
                 {paper.source}
               </span>
-              <span className="px-2 py-0.5 rounded-md text-xs bg-gray-700 text-gray-300">
+              <span className="px-2 py-0.5 rounded-md text-xs bg-slate-100 text-slate-600 border border-slate-200">
                 {paper.category}
               </span>
-              <span className="text-xs text-gray-500 flex items-center gap-1">
+              <span className="text-xs text-slate-400 flex items-center gap-1">
                 <Calendar className="w-3 h-3" />{paper.date}
               </span>
             </div>
-            <h2 className="text-lg font-bold text-white leading-snug line-clamp-2">{paper.title}</h2>
-            <p className="text-sm text-gray-400 mt-1 flex items-center gap-1 flex-wrap">
+            <h2 className="text-lg font-bold text-slate-800 leading-snug line-clamp-2">{paper.title}</h2>
+            <p className="text-sm text-slate-400 mt-1 flex items-center gap-1 flex-wrap">
               <Users className="w-3 h-3 flex-shrink-0" />
               {paper.authors.slice(0, 5).join(', ')}
-              {paper.authors.length > 5 && <span className="text-gray-500">+{paper.authors.length - 5}</span>}
+              {paper.authors.length > 5 && <span className="text-slate-300">+{paper.authors.length - 5}</span>}
             </p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -61,14 +61,14 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
               href={paper.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs hover:bg-blue-500/20 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 text-xs hover:bg-blue-100 transition-colors font-medium"
             >
               <ExternalLink className="w-3 h-3" />
               arXiv
             </a>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -80,19 +80,19 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
             <>
               {/* 中文摘要 */}
               <section>
-                <SectionHeader icon={BookOpen} title="中文摘要" color="text-blue-400" />
-                <p className="text-gray-300 leading-relaxed text-sm bg-gray-800/60 rounded-xl p-4 border border-gray-700/50">
+                <SectionHeader icon={BookOpen} title="中文摘要" color="text-blue-600" bgColor="bg-blue-50" borderColor="border-blue-100" />
+                <p className="text-slate-600 leading-relaxed text-sm bg-blue-50/60 rounded-xl p-4 border border-blue-100">
                   {ins.zhAbstract}
                 </p>
               </section>
 
               {/* 核心创新点 */}
               <section>
-                <SectionHeader icon={Lightbulb} title="核心创新点" color="text-yellow-400" />
+                <SectionHeader icon={Lightbulb} title="核心创新点" color="text-amber-600" bgColor="bg-amber-50" borderColor="border-amber-100" />
                 <ul className="space-y-2">
                   {ins.innovations.map((point, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-xs flex items-center justify-center font-bold mt-0.5">
+                    <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-100 border border-amber-200 text-amber-600 text-xs flex items-center justify-center font-bold mt-0.5">
                         {i + 1}
                       </span>
                       <span>{point}</span>
@@ -104,15 +104,15 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
               {/* 核心数学公式 */}
               {ins.keyFormulas && ins.keyFormulas.length > 0 && (
                 <section>
-                  <SectionHeader icon={FlaskConical} title="核心数学公式" color="text-purple-400" />
+                  <SectionHeader icon={FlaskConical} title="核心数学公式" color="text-purple-600" bgColor="bg-purple-50" borderColor="border-purple-100" />
                   <div className="space-y-3">
                     {ins.keyFormulas.map((f, i) => (
-                      <div key={i} className="bg-gray-800/60 border border-gray-700/50 rounded-xl p-4">
-                        <p className="text-xs text-purple-400 font-semibold mb-2 uppercase tracking-wider">{f.name}</p>
-                        <div className="bg-gray-900/80 rounded-lg p-3 border border-gray-700/50">
+                      <div key={i} className="bg-purple-50/60 border border-purple-100 rounded-xl p-4">
+                        <p className="text-xs text-purple-600 font-semibold mb-2 uppercase tracking-wider">{f.name}</p>
+                        <div className="bg-white rounded-lg p-3 border border-purple-100 shadow-sm">
                           <MathFormula formula={f.formula} />
                         </div>
-                        <p className="text-xs text-gray-400 mt-2 leading-relaxed">{f.description}</p>
+                        <p className="text-xs text-slate-500 mt-2 leading-relaxed">{f.description}</p>
                       </div>
                     ))}
                   </div>
@@ -122,11 +122,11 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
               {/* 实验结果 */}
               {ins.experimentHighlights && ins.experimentHighlights.length > 0 && (
                 <section>
-                  <SectionHeader icon={BarChart3} title="实验结果亮点" color="text-emerald-400" />
+                  <SectionHeader icon={BarChart3} title="实验结果亮点" color="text-emerald-600" bgColor="bg-emerald-50" borderColor="border-emerald-100" />
                   <ul className="space-y-2">
                     {ins.experimentHighlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
-                        <span className="text-emerald-400 mt-0.5 flex-shrink-0">▸</span>
+                      <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                        <span className="text-emerald-500 mt-0.5 flex-shrink-0 font-bold">▸</span>
                         <span>{h}</span>
                       </li>
                     ))}
@@ -137,10 +137,10 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
               {/* 适用场景 */}
               {ins.useCases && ins.useCases.length > 0 && (
                 <section>
-                  <SectionHeader icon={Cpu} title="适用场景" color="text-cyan-400" />
+                  <SectionHeader icon={Cpu} title="适用场景" color="text-cyan-600" bgColor="bg-cyan-50" borderColor="border-cyan-100" />
                   <div className="flex flex-wrap gap-2">
                     {ins.useCases.map((u, i) => (
-                      <span key={i} className="px-3 py-1.5 rounded-lg text-xs bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                      <span key={i} className="px-3 py-1.5 rounded-lg text-xs bg-cyan-50 border border-cyan-200 text-cyan-700 font-medium">
                         {u}
                       </span>
                     ))}
@@ -149,26 +149,25 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
               )}
             </>
           ) : (
-            /* Fallback for papers without insights */
             <section>
-              <SectionHeader icon={BookOpen} title="论文摘要（英文）" color="text-blue-400" />
-              <p className="text-gray-300 leading-relaxed text-sm bg-gray-800/60 rounded-xl p-4 border border-gray-700/50">
+              <SectionHeader icon={BookOpen} title="论文摘要（英文）" color="text-blue-600" bgColor="bg-blue-50" borderColor="border-blue-100" />
+              <p className="text-slate-600 leading-relaxed text-sm bg-slate-50 rounded-xl p-4 border border-slate-200">
                 {paper.abstract}
               </p>
-              <div className="mt-4 p-4 rounded-xl border border-dashed border-gray-600 text-center">
-                <p className="text-sm text-gray-500">中文洞察内容生成中，敬请期待…</p>
+              <div className="mt-4 p-4 rounded-xl border border-dashed border-slate-300 text-center">
+                <p className="text-sm text-slate-400">中文洞察内容生成中，敬请期待…</p>
               </div>
             </section>
           )}
 
           {/* Tags */}
           <section>
-            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <p className="text-xs text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <Tag className="w-3 h-3" /> 关键词
             </p>
             <div className="flex flex-wrap gap-1.5">
               {paper.tags.map(t => (
-                <span key={t} className="px-2 py-1 rounded-md text-xs bg-gray-800 text-gray-400 border border-gray-700">
+                <span key={t} className="px-2 py-1 rounded-md text-xs bg-slate-100 text-slate-500 border border-slate-200">
                   {t}
                 </span>
               ))}
@@ -176,9 +175,9 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
           </section>
 
           {/* Venue & Citations */}
-          <div className="flex items-center justify-between text-xs text-gray-500 border-t border-gray-800 pt-4">
-            <span>发表于：<span className="text-gray-300">{paper.venue}</span></span>
-            <span>引用数：<span className="text-gray-300 font-medium">{paper.citations.toLocaleString()}</span></span>
+          <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-200 pt-4">
+            <span>发表于：<span className="text-slate-600 font-medium">{paper.venue}</span></span>
+            <span>引用数：<span className="text-slate-700 font-bold">{paper.citations.toLocaleString()}</span></span>
           </div>
         </div>
       </div>
@@ -204,11 +203,17 @@ function MathFormula({ formula }: { formula: string }) {
   return <div ref={ref} className="overflow-x-auto py-1" />;
 }
 
-function SectionHeader({ icon: Icon, title, color }: { icon: React.ComponentType<{ className?: string }>, title: string, color: string }) {
+function SectionHeader({ icon: Icon, title, color, bgColor, borderColor }: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+}) {
   return (
-    <h3 className={`flex items-center gap-2 text-sm font-semibold mb-3 ${color}`}>
-      <Icon className="w-4 h-4" />
-      {title}
-    </h3>
+    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${bgColor} border ${borderColor} w-fit mb-3`}>
+      <Icon className={`w-4 h-4 ${color}`} />
+      <h3 className={`text-sm font-semibold ${color}`}>{title}</h3>
+    </div>
   );
 }
