@@ -19,14 +19,19 @@ export const openSourceModelPapers: Paper[] = [
     venue: 'arXiv 2024',
     insights: {
       zhAbstract:
-        'DeepSeek-V3 是 DeepSeek 的核心开源技术报告，主打“大参数总量 + 低激活成本”的 MoE 路线：总参数 671B、每 token 激活 37B。在训练侧通过 14.8T token 预训练和后续 SFT/RL 组合，实现了对推理能力与训练稳定性的平衡。',
+        'DeepSeek-V3 是 DeepSeek 的核心开源技术报告，主打"大参数总量 + 低激活成本"的 MoE 路线：总参数 671B、每 token 激活 37B。在训练侧通过 14.8T token 预训练和后续 SFT/RL 组合，实现了对推理能力与训练稳定性的平衡。',
       innovations: [
         '提出并工程化 Multi-head Latent Attention（MLA）与 DeepSeekMoE 组合架构',
         '采用 auxiliary-loss-free 的负载均衡策略，降低传统 MoE 辅助损失副作用',
         '引入 multi-token prediction 训练目标，提升 token 级效率',
         '强调训练稳定性：官方报告称训练过程无不可恢复 loss spike',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: 'MLA KV 压缩', formula: 'c^{KV}_t = W^{DKV} h_t, \\quad k_t = W^{UK} c^{KV}_t, \\quad v_t = W^{UV} c^{KV}_t', description: '将 KV 缓存压缩到低维潜在向量，MLA 每 token 每层缓存仅 576 元素，是标准 MHA 的 1/25' },
+        { name: 'MLA 缓存对比', formula: '\\text{MLA Cache} = d_c + d_{RoPE} = 512 + 64 = 576 \\quad \\text{vs} \\quad \\text{MHA} = 2 \\times 7168 = 14336', description: 'MLA 缓存大小仅为标准 MHA 的 4%' },
+        { name: 'DeepSeekMoE 门控', formula: 'g_i = \\text{TopK}(W_g h_t, N), \\quad E_i = \\text{Expert}(h_t), \\quad y = \\sum_{i=1}^{N} g_i \\cdot E_i', description: 'Top-K 门控选择 N 个专家，加权求和输出' },
+        { name: '无辅助损失负载均衡', formula: '\\mathcal{L}_{balance} = \\lambda \\cdot \\sum_{i=1}^{N} |s_i - \\text{target}|, \\quad s_i = \\frac{\\text{ExpertLoad}_i}{\\sum_j \\text{ExpertLoad}_j}', description: '通过可学习的偏置项实现负载均衡，无需辅助损失函数' },
+      ],
       experimentHighlights: [
         '671B 总参数、37B 激活参数/token',
         '14.8T token 预训练后再进行 SFT + RL',
@@ -53,14 +58,19 @@ export const openSourceModelPapers: Paper[] = [
     venue: 'arXiv 2025',
     insights: {
       zhAbstract:
-        'DeepSeek-R1 报告的核心是“用强化学习直接激励推理能力”。R1-Zero 先证明纯 RL 能涌现反思与验证等推理行为，再通过冷启动数据和多阶段训练得到更稳定、可读性更好的 R1。',
+        'DeepSeek-R1 报告的核心是"用强化学习直接激励推理能力"。R1-Zero 先证明纯 RL 能涌现反思与验证等推理行为，再通过冷启动数据和多阶段训练得到更稳定、可读性更好的 R1。',
       innovations: [
         '把 RL 放到推理能力塑造的中心位置，弱化对人工推理标注轨迹的依赖',
         '提出 R1-Zero 到 R1 的两阶段路线：先涌现能力，再工程化可用性',
         '围绕数学、代码和 STEM 等可验证任务构建奖励信号',
         '同步开源多尺寸蒸馏模型，扩大推理模型可用范围',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: 'GRPO 损失函数', formula: '\\mathcal{L}_{GRPO} = -\\mathbb{E}_{q \\sim \\mathcal{D}, o_i \\sim \\pi_{old}(\\cdot|q)} \\left[ \\frac{1}{|o_i|}\\sum_{i=1}^{|o_i|} \\frac{\\pi_\\theta(o_i|q)}{\\pi_{old}(o_i|q)} \\hat{A}_i \\right]', description: 'Group Relative Policy Optimization，在同一问题生成的多个答案组内计算相对优势' },
+        { name: '组内相对优势', formula: '\\hat{A}_i = \\frac{r_i - \\mu_{\\mathcal{G}}}{\\sigma_{\\mathcal{G}}}, \\quad r_i = \\text{Reward}(o_i)', description: '对同一问题生成的答案组计算标准化的相对优势，避免对参考模型的依赖' },
+        { name: '采样组奖励', formula: '\\mathcal{G} = \\{o_1, o_2, ..., o_G\\}, \\quad r_i = \\text{Accuracy}(o_i) + \\text{Format}(o_i)', description: '每个问题采样 G 个答案，计算准确率和格式奖励' },
+        { name: '冷启动数据', formula: '\\mathcal{D}_{cold} = \\{(q, \\text{chain-of-thought}, a)\\}, \\quad a = \\text{ground-truth}', description: '使用带长思维链的冷启动数据微调，避免 RL 训练早期崩溃' },
+      ],
       experimentHighlights: [
         '报告称 R1 在多个推理任务上可比肩同代闭源推理模型',
         '展示了 self-reflection、verification 等行为涌现',
@@ -94,7 +104,12 @@ export const openSourceModelPapers: Paper[] = [
         '23T token 级别训练与多阶段后训练迭代',
         '同代同时发布大模型与轻量模型，覆盖不同部署场景',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: '混合推理切换', formula: 'y = \\begin{cases} \\text{Thinking}(x) & \\text{if } P_{think}(x) > \\tau \\\\ \\text{Direct}(x) & \\text{otherwise} \\end{cases}', description: '根据输入复杂度动态决定是否启用思考模式，τ 为阈值' },
+        { name: 'MoE 路由', formula: 'y = \\sum_{i=1}^{N} G(x)_i \\cdot E_i(x), \\quad G(x) = \\text{TopK}(\\text{Softmax}(W x), k)', description: 'Top-K 门控选择 k 个专家进行计算' },
+        { name: 'ARC 评测指标', formula: '\\text{ARC-Score} = w_1 \\cdot \\text{Agent} + w_2 \\cdot \\text{Reasoning} + w_3 \\cdot \\text{Coding}', description: '智能体、推理、编码能力的加权综合评分' },
+        { name: '长上下文训练', formula: '\\text{Context}_{max} = 1M, \\quad \\text{Position}_i = \\text{RoPE}(\\sin(i/10000^{2d/D}), \\cos(i/10000^{2d/D}))', description: '采用 RoPE 编码位置信息，支持百万级上下文' },
+      ],
       experimentHighlights: [
         '355B 总参数、32B 激活参数/token',
         '报告给出 TAU-Bench / AIME24 / SWE-bench Verified 等关键分数',
@@ -121,14 +136,19 @@ export const openSourceModelPapers: Paper[] = [
     venue: 'arXiv 2025',
     insights: {
       zhAbstract:
-        'MiniMax-M1 主打“长上下文 + 推理效率”。其技术报告将 hybrid attention 与 MoE 结合，并把 test-time compute 扩展能力作为核心卖点之一。报告还提出 CISPO 来提升强化学习后训练效率。',
+        'MiniMax-M1 主打"长上下文 + 推理效率"。其技术报告将 hybrid attention 与 MoE 结合，并把 test-time compute 扩展能力作为核心卖点之一。报告还提出 CISPO 来提升强化学习后训练效率。',
       innovations: [
         'Hybrid MoE + lightning attention，面向长上下文推理',
         '支持 1M 原生上下文窗口，强调复杂长输入任务能力',
         '提出 CISPO（裁剪重要性采样权重）以提升 RL 训练效率',
         '以成本和训练周期为指标展示工程可扩展性',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: 'Lightning Attention 线性注意力', formula: '\\text{LA}(Q, K, V) = \\frac{\\phi(Q) (K^T V)}{\\phi(K)^T}', description: '线性注意力将 O(N²) 复杂度降至 O(N)，φ 为特征映射函数' },
+        { name: 'CISPO 损失函数', formula: '\\mathcal{L}_{CISPO} = -\\mathbb{E}_{o \\sim \\pi_{old}}[M \\cdot r(\\theta) \\hat{A} \\log \\pi_\\theta(o)]', description: 'Token 级裁剪的重要性采样优化，M 为掩码函数' },
+        { name: 'CISPO Token 掩码', formula: 'M = \\begin{cases} 0 & \\hat{A}>0 \\text{ and } r > 1+\\epsilon_{high} \\\\ 0 & \\hat{A}<0 \\text{ and } r < 1-\\epsilon_{low} \\\\ 1 & \\text{otherwise} \\end{cases}', description: '优势为正时限制重要性权重放大，为负时限制缩小' },
+        { name: '长度扩展策略', formula: '\\text{Window}_i \\rightarrow \\text{Window}_{i+1}: 40K \\rightarrow 48K \\rightarrow 56K \\rightarrow 64K \\rightarrow 72K \\rightarrow 80K', description: '基于困惑度收敛和输出长度分布触发扩展' },
+      ],
       experimentHighlights: [
         '总参数 456B、激活参数 45.9B/token（报告口径）',
         '1M context 长文能力',
@@ -155,14 +175,19 @@ export const openSourceModelPapers: Paper[] = [
     venue: 'arXiv 2025',
     insights: {
       zhAbstract:
-        'Kimi K2 聚焦“开源 Agentic Intelligence”，报告提出 MuonClip 优化器与大规模 agent 数据合成流程，目标是在保持训练稳定性的同时提升 token 效率和环境交互能力。',
+        'Kimi K2 聚焦"开源 Agentic Intelligence"，报告提出 MuonClip 优化器与大规模 agent 数据合成流程，目标是在保持训练稳定性的同时提升 token 效率和环境交互能力。',
       innovations: [
         '1T 总参 MoE + 32B 激活参数路线，兼顾容量与推理成本',
         '提出 MuonClip（含 QK-clip）用于稳定训练与效率提升',
         '多阶段后训练中强调真实/合成环境交互',
         '将 agent 能力作为主线而不只是通用问答能力',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: 'Muon 优化器', formula: '\\theta_{new} = \\theta - \\alpha \\cdot \\nabla_\\theta \\mathcal{L}_{Muon}, \\quad \\mathcal{L}_{Muon} = -\\log \\text{diag}(U V^T)', description: 'Muon 通过 SVD 分解计算低秩更新方向，U、V 为梯度矩阵的奇异值分解结果' },
+        { name: 'QK-clip 技巧', formula: 'Q_{clipped} = Q \\cdot \\min(1, \\frac{C}{\\|Q\\|_2}), \\quad K_{clipped} = K \\cdot \\min(1, \\frac{C}{\\|K\\|_2})', description: '裁剪 Q/K 矩阵的范数，防止训练早期梯度爆炸' },
+        { name: 'Token 效率', formula: '\\text{TokenEfficiency} = \\frac{\\text{ValidTokens}}{\\text{TotalTokens}} = 1 - \\frac{\\text{RepetitionPenalty} \\cdot \\sum_{i} \\mathbf{1}[p_i < \\tau]}{L}', description: '通过重复惩罚和早停机制提升有效 token 比例' },
+        { name: 'Agent 数据合成', formula: '\\mathcal{D}_{agent} = \\mathcal{D}_{real} \\cup \\mathcal{D}_{synth}, \\quad \\mathcal{D}_{synth} = \\text{LLM}(Task, Environment)', description: '真实数据与合成数据混合，合成数据通过 LLM 生成任务-环境对' },
+      ],
       experimentHighlights: [
         '1T 总参数、32B 激活参数/token',
         '预训练规模 15.5T token（报告口径）',
@@ -189,14 +214,19 @@ export const openSourceModelPapers: Paper[] = [
     venue: 'arXiv 2025',
     insights: {
       zhAbstract:
-        '这份报告可视为蚂蚁 Ling 路线的“效率缩放律”核心文档之一：它把 MoE 架构搜索抽象为可预测的 Efficiency Leverage（EL），并通过 Ling-mini-beta 进行实证验证，为后续 Ling-2.0 系列提供可量化的配置设计方法。',
+        '这份报告可视为蚂蚁 Ling 路线的"效率缩放律"核心文档之一：它把 MoE 架构搜索抽象为可预测的 Efficiency Leverage（EL），并通过 Ling-mini-beta 进行实证验证，为后续 Ling-2.0 系列提供可量化的配置设计方法。',
       innovations: [
         '提出 Efficiency Leverage（EL）指标量化 MoE 相对 dense 的计算优势',
         '基于 300+ 模型实验给出可拟合的 MoE 缩放规律',
         '指出激活比例与总算力预算对 EL 的主导作用',
         '以 Ling-mini-beta 对缩放律进行外部验证',
       ],
-      keyFormulas: [],
+      keyFormulas: [
+        { name: '效率杠杆 EL', formula: '\\text{EL} = \\frac{\\text{Performance}_{MoE}}{\\text{Compute}_{MoE}} \\bigg/ \\frac{\\text{Performance}_{dense}}{\\text{Compute}_{dense}}', description: '衡量 MoE 相对于 Dense 模型在同等计算量下的性能优势' },
+        { name: 'MoE 缩放律', formula: 'P(N, M, k) = \\alpha \\cdot \\log(N) + \\beta \\cdot \\log(M) + \\gamma \\cdot k + \\delta', description: '性能 P 与总专家数 N、激活专家数 k、专家维度 M 的对数线性关系' },
+        { name: '激活比例影响', formula: '\\text{EL} \\approx \\frac{k_{dense}}{k_{MoE}} \\cdot \\left(1 + \\lambda \\cdot \\frac{N_{experts}}{N_{total}}\\right)', description: '激活比例越小，EL 越高；专家数增加带来额外收益' },
+        { name: '计算预算约束', formula: '\\text{FLOPs}_{total} = C \\cdot N_{total} = C \\cdot N_{active} \\cdot \\frac{N_{total}}{N_{active}}', description: '总计算量受激活参数和总参数比例约束' },
+      ],
       experimentHighlights: [
         '报告覆盖 300+ MoE 实验模型',
         'Ling-mini-beta 用 0.85B 激活参数达到 6.1B dense 近似性能',
