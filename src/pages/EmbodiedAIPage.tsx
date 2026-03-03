@@ -1,7 +1,7 @@
 import PaperTracker from '../components/PaperTracker';
 import { embodiedAIPapers } from '../data/embodiedAIPapers';
 
-const CATEGORIES = ['VLA', 'EAI', 'VLA Quantization', 'Manipulation', 'Navigation', 'Benchmark'];
+const CATEGORIES = ['VLA', 'EAI', 'VLA Quantization', 'Manipulation', 'Navigation', 'Benchmark', 'Robotics RL'];
 
 export default function EmbodiedAIPage() {
   return (
