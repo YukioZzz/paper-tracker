@@ -1,7 +1,7 @@
 import PaperTracker from '../components/PaperTracker';
 import { infraPapers } from '../data/infraPapers';
 
-const CATEGORIES = ['Memory Optimization', 'Distributed Training', 'Inference', 'Quantization', 'MoE', 'Communication', 'Mixed Precision'];
+const CATEGORIES = ['Memory Optimization', 'Distributed Training', 'Inference', 'Quantization', 'MoE', 'Communication', 'Mixed Precision', 'RL Training'];
 
 export default function InfraPage() {
   return (
