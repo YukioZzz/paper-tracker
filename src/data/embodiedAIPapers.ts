@@ -990,4 +990,33 @@ export const embodiedAIPapers: Paper[] = [
       useCases: ['扩散模型的在线 RL 微调', '图像/视频生成的强化学习后训练', '需要 CFG-free 的生成任务'],
     },
   },
+  {
+    id: 'eai-041',
+    title: 'VLAs with Long and Short-Term Memory (MEM)',
+    authors: ['Marcel Torne', 'Karl Pertsch', 'Homer Walke', 'Kyle Vedder', 'Suraj Nair', 'Brian Ichter', 'Allen Ren', 'Haohuan Wang', 'Jiaming Tang', 'Kyle Stachowicz', 'Karan Dhabalia', 'Michael Equi', 'Quan Vuong', 'Jost Tobias Springenberg', 'Sergey Levine', 'Chelsea Finn', 'Danny Driess'],
+    date: '2026-03-03', year: 2026, month: 3,
+    source: 'Physical Intelligence', url: 'https://www.pi.website/research/memory',
+    abstract: 'MEM (Multi-Scale Embodied Memory) provides Vision-Language-Action models with memory capabilities to enable very long tasks such as cleaning an entire kitchen or cooking a grilled cheese sandwich from scratch. The method allows models to keep track of tasks up to fifteen minutes in length.',
+    tags: ['VLA', 'Memory', 'Long-horizon', 'Embodied AI', 'Physical Intelligence'],
+    category: 'Robotics RL', citations: 0, venue: 'Physical Intelligence 2026',
+    insights: {
+      zhAbstract: 'MEM（多尺度具身记忆）是 Physical Intelligence 提出的为 VLA 模型赋予记忆能力的工作。MEM 让机器人能够处理超过十分钟的长时任务（如清理整个厨房或从零开始做三明治），同时维护短期和长期记忆，甚至能通过上下文适应纠正错误。MEM 提供多模态记忆机制：短期记忆以原始观测维护，长期记忆以自然语言抽象概念存储。',
+      innovations: [
+        '视频编码器：高效的短期记忆编码器，将标准 ViT 扩展到视频输入，交织稀疏空间注意力和因果时序注意力',
+        '基于语言的记忆：长期记忆以自然语言形式存储过去事件，支持抽象概念表示',
+        '推理选择机制：模型主动决定记住什么以及如何记忆，同时选择高层子目标',
+        '记忆压缩：上层 ViT 中丢弃历史 token，减少传递给 VLA 主干的 token 数量',
+        '时间注意力：跨时间步的时间注意力连接相同空间位置，追踪运动和变化',
+      ],
+      keyFormulas: [
+        { name: '短期记忆编码', formula: 'h_t = Attention_{spatial}(h_{t-1}) + Attention_{temporal}(h_{<t})', description: '短期记忆通过交织空间注意力和时序注意力编码，追踪运动变化' },
+        { name: '长期记忆表示', formula: 'L_t = summarize(L_{t-1}, event_t), \\quad L_0 = \\emptyset', description: '长期记忆以自然语言形式总结过去事件，如"我拿起了盘子"' },
+        { name: '分层任务规划', formula: 'subtask = VLM(o_t, L_t), \\quad a_t = VLA(o_t, L_t, subtask)', description: '高层子目标选择频率低（~1Hz），动作生成频率高（~10Hz）' },
+        { name: '上下文适应', formula: 'a_t = f(a_t | memory), \\quad memory = \\{o_{<t}, L_{<t}\\}', description: '根据记忆中的过去行为调整当前动作策略，纠正错误' },
+        { name: '记忆压缩', formula: 'token_{compressed} = Drop(token_{upper}), \\quad ratio = 1/4', description: '上层 ViT 丢弃 3/4 历史 token，减少传递到 VLA 的 token 数' },
+      ],
+      experimentHighlights: ['任务持续时间可达 15 分钟（清理厨房、从零做三明治）', 'MEM (π₀.₆-MEM) 在 Swap 3 Mugs、Find Object、Unpack Groceries 等任务上显著超越基线', '同时维护短期和长期记忆，支持上下文内适应', 'Physical Intelligence 2026年3月发布'],
+      useCases: ['长时间的家务机器人任务', '需要记忆进度和纠正错误的复杂操控', '开放世界的多阶段任务规划'],
+    },
+  },
 ];
