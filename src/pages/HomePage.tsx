@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Brain, Globe, Zap, BookOpen, TrendingUp, RefreshCw, Database, Moon, Sun, FlaskConical } from 'lucide-react';
+import { Brain, Globe, Zap, BookOpen, TrendingUp, RefreshCw, Database, Moon, Sun, FlaskConical, GraduationCap } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 export default function HomePage() {
@@ -149,6 +149,24 @@ export default function HomePage() {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-slate-400 dark:text-slate-500">6+ 篇</span>
+                <span className="text-slate-600 group-hover:translate-x-1 transition-transform font-medium dark:text-slate-300">进入 →</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Learning Paths */}
+          <Link to="/learning-paths" className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white hover:border-amber-300 hover:shadow-xl hover:shadow-amber-100 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-amber-500 dark:hover:shadow-amber-950/40">
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:from-slate-800 dark:to-amber-900/30" />
+            <div className="relative p-7">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-md shadow-amber-200">
+                <GraduationCap className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-slate-800 group-hover:text-amber-700 transition-colors dark:text-slate-100 dark:group-hover:text-amber-300">学习路径</h3>
+              <p className="text-slate-400 mb-5 text-sm leading-relaxed dark:text-slate-400">
+                从入门到专家的系统性成长指南，论文学习顺序与侧重点
+              </p>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-400 dark:text-slate-500">4 方向 · 30+ 论文</span>
                 <span className="text-slate-600 group-hover:translate-x-1 transition-transform font-medium dark:text-slate-300">进入 →</span>
               </div>
             </div>
