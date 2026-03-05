@@ -1,9 +1,25 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Search, ExternalLink, BookOpen, Users, Calendar, Tag, TrendingUp, Filter, ChevronDown, Sparkles, Moon, Sun, LayoutGrid, List } from 'lucide-react';
+import { ArrowLeft, Search, ExternalLink, BookOpen, Users, Calendar, Tag, TrendingUp, Filter, ChevronDown, ChevronRight, Sparkles, Moon, Sun, LayoutGrid, List, GraduationCap } from 'lucide-react';
 import { Paper } from '../data/embodiedAIPapers';
 import PaperModal from './PaperModal';
 import { useTheme } from '../hooks/useTheme';
+
+interface LearningPathPaper {
+  name: string;
+  focus: string;
+  prerequisite: string;
+}
+
+interface LearningPathLevel {
+  name: string;
+  papers: LearningPathPaper[];
+}
+
+interface LearningPathSection {
+  title: string;
+  levels: LearningPathLevel[];
+}
 
 const SOURCE_COLORS: Record<string, string> = {
   arXiv: 'bg-orange-100 text-orange-600 border-orange-200',
@@ -38,11 +54,12 @@ interface PaperTrackerProps {
   tagBorder: string;
   papers: Paper[];
   categories: string[];
+  learningPaths?: LearningPathSection[];
 }
 
 export default function PaperTracker({
   title, subtitle, emoji, accentFrom, accentTo, accentText, accentBorder, accentBg,
-  tagBg, tagText, tagBorder, papers, categories,
+  tagBg, tagText, tagBorder, papers, categories, learningPaths,
 }: PaperTrackerProps) {
   const { isDark, toggleTheme } = useTheme();
   const [search, setSearch] = useState('');
@@ -56,6 +73,8 @@ export default function PaperTracker({
   });
   const [showFilters, setShowFilters] = useState(false);
   const [modalPaper, setModalPaper] = useState<Paper | null>(null);
+  const [showLearningPaths, setShowLearningPaths] = useState(false);
+  const [expandedLevels, setExpandedLevels] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     window.localStorage.setItem(VIEW_MODE_STORAGE_KEY, viewMode);
@@ -147,6 +166,79 @@ export default function PaperTracker({
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
+        {/* Learning Paths Toggle */}
+        {learningPaths && learningPaths.length > 0 && (
+          <div className="mb-6">
+            <button
+              onClick={() => setShowLearningPaths(!showLearningPaths)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+                showLearningPaths 
+                  ? `${accentBg} ${accentText} ${accentBorder} font-medium` 
+                  : 'bg-white border-slate-200 text-slate-600 hover:border-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4" />
+              学习路径
+              {showLearningPaths ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+
+            {/* Learning Paths Content */}
+            {showLearningPaths && (
+              <div className="mt-4 p-4 rounded-xl bg-white border border-slate-200 dark:bg-slate-900 dark:border-slate-800">
+                {learningPaths.map((section, sectionIdx) => (
+                  <div key={section.title} className="mb-6 last:mb-0">
+                    <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">{section.title}</h3>
+                    <div className="space-y-3">
+                      {section.levels.map((level, levelIdx) => (
+                        <div key={level.name}>
+                          <button
+                            onClick={() => setExpandedLevels(prev => ({ ...prev, [level.name]: !prev[level.name] }))}
+                            className="w-full flex items-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                          >
+                            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{level.name}</span>
+                            <span className="ml-auto text-xs text-slate-400">{level.papers.length} 篇</span>
+                            {expandedLevels[level.name] ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
+                          </button>
+                          {expandedLevels[level.name] !== false && (
+                            <div className="mt-2 space-y-2 pl-4 border-l-2 border-slate-200 dark:border-slate-700">
+                              {level.papers.map((paper) => {
+                                // Find matching paper in papers array
+                                const matchedPaper = papers.find(p => p.title.toLowerCase().includes(paper.name.toLowerCase().split(' ')[0].toLowerCase()));
+                                return (
+                                  <div
+                                    key={paper.name}
+                                    onClick={() => matchedPaper && setModalPaper(matchedPaper)}
+                                    className={`p-3 rounded-lg border transition-colors cursor-pointer ${
+                                      matchedPaper 
+                                        ? 'bg-white border-slate-200 hover:border-blue-300 dark:bg-slate-800 dark:border-slate-700 dark:hover:border-blue-500' 
+                                        : 'bg-slate-50 border-slate-200 opacity-60 dark:bg-slate-800/50 dark:border-slate-700'
+                                    }`}
+                                  >
+                                    <div className="flex items-start justify-between">
+                                      <div>
+                                        <h4 className="font-medium text-slate-900 dark:text-white">{paper.name}</h4>
+                                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{paper.focus}</p>
+                                      </div>
+                                      {matchedPaper && <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0 mt-1" />}
+                                    </div>
+                                    <div className="mt-2 inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-50 dark:bg-amber-900/20 text-xs text-amber-700 dark:text-amber-400">
+                                      <span className="font-medium">前置:</span> {paper.prerequisite}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Search & Filter Bar */}
         <div className="flex flex-col md:flex-row gap-3 mb-6">
           <div className="relative flex-1">
