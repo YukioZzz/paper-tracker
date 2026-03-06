@@ -10,7 +10,9 @@
     "lint": "pnpm install --prefer-offline && eslint .",
     "preview": "pnpm install --prefer-offline && vite preview",
     "install-deps": "pnpm install --prefer-offline",
-    "clean": "rm -rf node_modules .pnpm-store pnpm-lock.yaml && pnpm store prune"
+    "clean": "rm -rf node_modules .pnpm-store pnpm-lock.yaml && pnpm store prune",
+    "deploy": "npm run build && npm run deploy:github",
+    "deploy:github": "cd dist && git init && git add -A && git commit -m 'deploy: $(date +%Y-%m-%d_%H:%M)' && git push -f https://YukioZzz:${GITHUB_TOKEN}@github.com/YukioZzz/paper-tracker.git main:gh-pages --force || git push -f origin main:gh-pages --force"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

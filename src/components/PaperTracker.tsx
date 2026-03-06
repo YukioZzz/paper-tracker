@@ -143,30 +143,73 @@ export default function PaperTracker({
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats & View Toggle */}
       <div className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-        <div className="max-w-7xl mx-auto px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { label: '论文总数', value: stats.total, icon: BookOpen },
-            { label: '近两年新增', value: stats.recent, icon: TrendingUp },
-            { label: '主要来源', value: stats.topVenue, icon: ExternalLink },
-            { label: '总引用数', value: stats.totalCites.toLocaleString(), icon: Users },
-          ].map(s => (
-            <div key={s.label} className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl ${accentBg} border ${accentBorder} flex items-center justify-center`}>
-                <s.icon className={`w-5 h-5 ${accentText}`} />
-              </div>
-              <div>
-                <div className="text-xl font-bold text-slate-800 dark:text-slate-100">{s.value}</div>
-                <div className="text-xs text-slate-400 dark:text-slate-500">{s.label}</div>
-              </div>
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <div className="flex items-center justify-between">
+            {/* View Mode Tabs */}
+            <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl dark:bg-slate-800">
+              {learningPaths && learningPaths.length > 0 ? (
+                <>
+                  <button
+                    onClick={() => setShowLearningPaths(false)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      !showLearningPaths
+                        ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                        : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <LayoutGrid className="w-4 h-4" />
+                    全部论文
+                  </button>
+                  <button
+                    onClick={() => setShowLearningPaths(true)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      showLearningPaths
+                        ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                        : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    学习路径
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white text-slate-800 shadow-sm dark:bg-slate-700 dark:text-slate-100"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                  全部论文
+                </button>
+              )}
             </div>
-          ))}
+
+            {/* Right side controls */}
+            <div className="flex items-center gap-2">
+              {[
+                { label: '论文总数', value: stats.total, icon: BookOpen },
+                { label: '近两年新增', value: stats.recent, icon: TrendingUp },
+                { label: '主要来源', value: stats.topVenue, icon: ExternalLink },
+                { label: '总引用数', value: stats.totalCites.toLocaleString(), icon: Users },
+              ].map(s => (
+                <div key={s.label} className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800">
+                  <s.icon className={`w-4 h-4 ${accentText}`} />
+                  <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{s.value}</span>
+                </div>
+              ))}
+              <button
+                onClick={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}
+                className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700"
+                title={viewMode === 'grid' ? '切换到列表视图' : '切换到网格视图'}
+              >
+                {viewMode === 'grid' ? <List className="w-4 h-4 text-slate-600 dark:text-slate-300" /> : <LayoutGrid className="w-4 h-4 text-slate-600 dark:text-slate-300" />}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* Learning Paths Toggle */}
         {learningPaths && learningPaths.length > 0 && (
           <div className="mb-6">
             <button
@@ -239,7 +282,8 @@ export default function PaperTracker({
           </div>
         )}
 
-        {/* Search & Filter Bar */}
+        {/* Search & Filter Bar - Hide in Learning Path Mode */}
+        {!showLearningPaths && (
         <div className="flex flex-col md:flex-row gap-3 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -288,6 +332,7 @@ export default function PaperTracker({
             </button>
           </div>
         </div>
+        )}
 
         {/* Filters */}
         {showFilters && (
@@ -317,7 +362,8 @@ export default function PaperTracker({
           </div>
         )}
 
-        {/* Category Tabs */}
+        {/* Category Tabs - Hide in Learning Path Mode */}
+        {!showLearningPaths && (
         <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
           {allCategories.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
@@ -326,13 +372,16 @@ export default function PaperTracker({
             </button>
           ))}
         </div>
+        )}
 
-        {/* Results count */}
+        {/* Results count - Hide in Learning Path Mode */}
+        {!showLearningPaths && (
         <p className="text-slate-400 text-sm mb-4 dark:text-slate-500">
           找到 <span className="text-slate-700 font-medium dark:text-slate-100">{filtered.length}</span> 篇论文
           {search && <span className="ml-1">（搜索："{search}"）</span>}
           <span className="ml-2 text-xs text-slate-300">· 点击论文标题查看洞察分析</span>
         </p>
+        )}
 
         {/* Paper List */}
         <div className={viewMode === 'grid' ? 'grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4' : 'space-y-4'}>
