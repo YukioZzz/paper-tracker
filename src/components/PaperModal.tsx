@@ -86,6 +86,21 @@ export default function PaperModal({ paper, onClose }: PaperModalProps) {
                 </p>
               </section>
 
+              {/* 详尽技术报告链接 */}
+              {paper.relatedLink && (
+                <section>
+                  <a
+                    href={paper.relatedLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-50 to-indigo-50 border border-violet-200 hover:from-violet-100 hover:to-indigo-100 transition-all dark:from-violet-950/30 dark:to-indigo-950/30 dark:border-violet-800"
+                  >
+                    <span className="text-sm font-medium text-violet-700 dark:text-violet-300">📖 查看详尽技术报告</span>
+                    <ExternalLink className="w-4 h-4 text-violet-500" />
+                  </a>
+                </section>
+              )}
+
               {/* 核心创新点 */}
               <section>
                 <SectionHeader icon={Lightbulb} title="核心创新点" color="text-amber-600" bgColor="bg-amber-50" borderColor="border-amber-100" />
