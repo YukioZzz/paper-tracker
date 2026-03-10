@@ -1136,6 +1136,7 @@ export const embodiedAIPapers: Paper[] = [
       ],
       experimentHighlights: ['在 LIBERO、ManiSkill、MetaWorld 等基准测试显著超越 SFT', '分布内 (In-distribution) 性能大幅提升', '分布外 (Out-of-distribution) 泛化能力显著增强', '支持大规模并行仿真训练'],
       useCases: ['流式 VLA 模型的在线 RL 微调', '机器人灵巧操作', '复杂长程任务', '需要在线交互学习的场景'],
+      relatedLink: 'https://xekwonwoe1j6.space.minimaxi.com/#pi-rl',
     },
   },
   {
@@ -1167,6 +1168,7 @@ export const embodiedAIPapers: Paper[] = [
       ],
       experimentHighlights: ['成功率比 SOTA π₀.5 提升约 250%', '仅需 20 小时训练数据', '8 卡 A100 GPU 训练', '24 小时连续运行从任意初始状态', '双机械臂协同操作'],
       useCases: ['衣物整理（平整、折叠、悬挂）', '复杂长程机器人操作', '需要高鲁棒性的真实部署场景', '资源受限但需高性能的任务'],
+      relatedLink: 'https://xekwonwoe1j6.space.minimaxi.com/#kai0',
     },
   },
 ];
