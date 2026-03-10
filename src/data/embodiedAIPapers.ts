@@ -26,6 +26,7 @@ export interface Paper {
   citations: number;
   venue: string;
   insights?: PaperInsights;
+  relatedLink?: string;
 }
 
 export const embodiedAIPapers: Paper[] = [

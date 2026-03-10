@@ -787,6 +787,7 @@ export const infraPapers: Paper[] = [
       ],
       experimentHighlights: ['DeepSeek-V3-685B 在 GB300 上达到 1,233 TFLOPS/GPU', 'DeepSeek-V3-685B 在 GB200 上达到 1,048 TFLOPS/GPU', 'Qwen3-235B 在 GB300 上达到 974 TFLOPS/GPU', 'Qwen3-235B 在 GB200 上达到 919 TFLOPS/GPU', '已训练从数十亿到数万亿参数的 MoE 模型', '支持数千 GPU 集群规模'],
       useCases: ['超大规模 MoE 模型训练', '分布式 LLM 预训练', '高效多维并行训练', '长上下文模型训练', '低精度大模型训练'],
+      relatedLink: 'https://vzofcw98jbgq.space.minimaxi.com/#megatron-moe',
     },
   },
 ];
